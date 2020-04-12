@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:c="http://www.springframework.org/schema/c"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://www.springframework.org/schema/context
+	http://www.springframework.org/schema/context/spring-context.xsd"
+	default-lazy-init="true">
+
+	<context:annotation-config/>
+	<bean id="singerOne" class="lifecycle.SingerWithJSR250" p:name="John Mayer" p:age="39"/>
+	
+	<bean id="singerTwo" class="lifecycle.SingerWithJSR250" p:age="24"/>
+	
+	<bean id="singerThree" class="lifecycle.SingerWithJSR250" p:name="johne Bulter"/> 
+	
+	<bean id="destructiveBean" class="lifecycle.DestructiveBeanWithInterface2" p:filePath="#{systemProperties['java.io.tmpdir']}#{systemProperties['file.separator']}test.txt"/>
+	
+	<bean id="shutdownHook" class="lifecycle.ShutDowHookBean"/>
+	
+	<bean id="shaDigestFactory" class="lifecycle.MessageDigestFactory"/>
+	
+	<bean id="defaultDigestFactory" class="lifecycle.MessageDigestFactory"/>
+	
+	<bean id="shaDigest" factory-bean="shaDigestFactory" factory-method="createInstance" />
+	
+	<bean id="defaultDigest" factory-bean="defaultFactory" factory-method="createInstance" />
+	
+	<bean id="digester" calss="lifecycle.MessageDigest" p:digest1-ref="shaDigest" p:digst2-ref="defaultDigest" />
+</beans>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:c="http://www.springframework.org/schema/c"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans.xsd"
+	default-lazy-init="true">
+	
+	<bean id="singerOne" class="lifecycle.SingerWithInterface" p:name="John Mayer" p:age="39"/>
+	
+	<bean id="singerTwo" class="lifecycle.SingerWithInterface" p:age="24"/>
+	
+	<bean id="singerThree" class="lifecycle.SingerWithInterface" p:name="john Butler"/>
+	
+	<bean id="destructiveBean" class="lifecycle.DestructiveBean" destroy-method="destroy" init-method="afterPropertiesSet" p:filePath="#{systemProperties['java.io.tmpdir']}#{systemProperties['file.seperateor']}test.txt"/>
+	
+	<bean id="destructiveBeanWithInterface" class="lifecycle.DestructiveBeanWithInterface" p:filePath="#{systemProperties['java.io.tmpdir']}#{systemProperties['file.seperateor']}test.txt" />
+
+	<bean id="maxShin" class="lifecycle.NamedSinger"/> 
+	
+	<bean id="shaDigest" class="lifecycle.MessageDigestFactoryBean" p:algorithmName="SHA1"/>
+	
+	<bean id="defaultDigest" class="lifecycle.MessageDigestFactoryBean"/>
+	
+	<bean id="digester" class="lifecycle.MessageDigester" p:digest1-ref="shaDigest" p:digest2-ref="defaultDigest"/>
+
+</beans>

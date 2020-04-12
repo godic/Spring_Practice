@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:c="http://www.springframework.org/schema/c"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+	<bean id="injectSimpleConfig"
+		class="ioc.InjectSimpleConfig"/>
+		
+	<bean id="injectSimpleSpel"
+		class="ioc.InjectSimpleSpel">
+		<property name="name" value="#{injectSimpleConfig.name}"/>
+		<property name="age" value="#{injectSimpleConfig.age}"/>
+		<property name="height" value="#{injectSimpleConfig.height}"/>
+		<property name="programmer" value="#{injectSimpleConfig.programmer}"/>
+		<property name="ageInSeconds" value="#{injectSimpleConfig.ageInSeconds}"/>
+	</bean>	
+	
+		<bean id="lyricHolder" class="ioc.LyricHolder"/>
+	
+	<bean id="injectCollection" class="ioc.CollectionInjection">
+		<property name="map">
+			<map>
+				<entry key="someValue">
+					 <value>It's Friday</value>
+				</entry>
+				<entry key="someBean">
+					<ref bean="lyricHolder"/>
+				</entry>
+			</map>
+		</property>
+		<property name="props">
+			<props>
+				<prop key="firstname">Max</prop>
+				<prop key="lastname">Shin</prop>
+			</props>
+		</property>
+		<property name="set">
+			<set>
+				<value>You've been Working</value>
+				<ref bean="lyricHolder"/>
+			</set>
+		</property>
+		<property name="list">
+			<list>
+				<value>I can't believe it</value>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="singer" class="ioc.Singer" scope="prototype"/>
+	
+	<bean id="abstractLookupBean" class="ioc.AbstractLookupDemoBean">
+		<lookup-method name="getMySinger" bean="singer"/>
+	</bean>
+	
+	<bean id="standardLookupBean" class="ioc.StandardLookupDemoBean">
+		<property name="mySinger" ref="singer"/>
+	</bean>
+	
+	<bean id="methodReplacer" class="ioc.FormatMessageReplacer"/>
+	
+	<bean id="replacementTarget" class="ioc.ReplacementTarget">
+		<replaced-method name="formatMessage" replacer="methodReplacer">
+			<arg-type>String</arg-type>
+		</replaced-method>
+	</bean>
+	
+	<bean id="standardTarget" class="ioc.ReplacementTarget"/>
+	
+	<bean id="nonSingleton" class="ioc.Singer" scope="prototype" c:_0="John Mayer"/>
+	
+	<bean id="parent" class="ioc.Singer" p:singer="John Mayer" p:age="39"/>
+	
+	<bean id="child" class="ioc.Singer" parent="parent" p:age="0"/>
+</beans>

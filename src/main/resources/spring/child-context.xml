@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://springframework.org/schema/p"
+	xmlns:c="http://springframework.org/schema/c"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+	
+	<bean id="childTitle" class="java.lang.String" c:_0="해당값없음"/>
+	
+	<bean id="song1" class="ioc.Song">
+		<property name="title" ref="parentTitle"/>
+	</bean>
+	
+	<bean id="song2" class="ioc.Song">
+		<property name="title" ref="childTitle"/>
+	</bean>
+	
+	<bean id="song3" class="ioc.Song">
+		<property name="title">
+			<ref parent="childTitle"/>
+		</property>
+	</bean>
+	
+</beans>
